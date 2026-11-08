@@ -62,7 +62,6 @@
   const curtain = $('#curtain');
   if (!hasGsap || reduceMotion) {
     curtain?.remove();
-    initScene();
     return;
   }
 
@@ -151,111 +150,4 @@
     });
   }
 
-  initScene();
-
-  // Three.js: a slow, interactive orbital sculpture. It pauses off-screen.
-  function initScene() {
-    const canvas = $('#scene');
-    if (!canvas || typeof window.THREE === 'undefined') return;
-    const lowPower = (navigator.hardwareConcurrency || 4) < 4;
-    let renderer;
-    try {
-      renderer = new THREE.WebGLRenderer({
-        canvas, alpha: true, antialias: !lowPower, powerPreference: 'low-power'
-      });
-    } catch {
-      canvas.hidden = true;
-      return;
-    }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1 : 1.5));
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 40);
-    camera.position.z = 7.4;
-
-    const sculpture = new THREE.Group();
-    scene.add(sculpture);
-
-    const shell = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(1.55, 2),
-      new THREE.MeshBasicMaterial({ color: '#c9f27a', wireframe: true, transparent: true, opacity: 0.19 })
-    );
-    const inner = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.92, 1),
-      new THREE.MeshBasicMaterial({ color: '#df9a70', wireframe: true, transparent: true, opacity: 0.55 })
-    );
-    const ringMaterial = new THREE.MeshBasicMaterial({ color: '#c9f27a', transparent: true, opacity: 0.3, side: THREE.DoubleSide });
-    const ringA = new THREE.Mesh(new THREE.TorusGeometry(2.05, 0.006, 8, 180), ringMaterial);
-    const ringB = new THREE.Mesh(new THREE.TorusGeometry(2.35, 0.004, 8, 180), new THREE.MeshBasicMaterial({ color: '#df9a70', transparent: true, opacity: 0.22 }));
-    ringA.rotation.set(1.05, 0.35, 0.2);
-    ringB.rotation.set(0.4, 1.1, -0.45);
-    sculpture.add(shell, inner, ringA, ringB);
-
-    const particleCount = lowPower ? 240 : 420;
-    const particlePositions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-      const radius = 2.7 + Math.random() * 1.2;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      particlePositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      particlePositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      particlePositions[i * 3 + 2] = radius * Math.cos(phi);
-    }
-    const particleGeometry = new THREE.BufferGeometry();
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    const particles = new THREE.Points(particleGeometry, new THREE.PointsMaterial({
-      color: '#e8e3d7', size: 0.018, transparent: true, opacity: 0.55, sizeAttenuation: true
-    }));
-    sculpture.add(particles);
-
-    const resize = () => {
-      const width = canvas.clientWidth || window.innerWidth;
-      const height = canvas.clientHeight || window.innerHeight;
-      renderer.setSize(width, height, false);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      sculpture.position.set(width > 900 ? 2.35 : 0.45, width > 900 ? 0.05 : 1.15, 0);
-      sculpture.scale.setScalar(width > 900 ? 1 : 0.78);
-    };
-    resize();
-    window.addEventListener('resize', resize, { passive: true });
-
-    let targetX = 0, targetY = 0, visible = true, frame = 0;
-    window.addEventListener('pointermove', (event) => {
-      targetX = (event.clientX / window.innerWidth - 0.5) * 0.42;
-      targetY = (event.clientY / window.innerHeight - 0.5) * 0.28;
-    }, { passive: true });
-    const observer = new IntersectionObserver((entries) => {
-      visible = entries[0].isIntersecting;
-      if (visible && !frame) render();
-      if (!visible && frame) { cancelAnimationFrame(frame); frame = 0; }
-    }, { threshold: 0 });
-    observer.observe(canvas);
-
-    const clock = new THREE.Clock();
-    const render = () => {
-      if (!visible) { frame = 0; return; }
-      frame = requestAnimationFrame(render);
-      const time = clock.getElapsedTime();
-      sculpture.rotation.y += (targetX + time * 0.035 - sculpture.rotation.y) * 0.018;
-      sculpture.rotation.x += (targetY - sculpture.rotation.x) * 0.018;
-      shell.rotation.y = time * 0.045;
-      inner.rotation.x = time * 0.09;
-      inner.rotation.y = -time * 0.07;
-      ringA.rotation.z = time * 0.035;
-      ringB.rotation.x = 0.4 + Math.sin(time * 0.18) * 0.08;
-      particles.rotation.y = -time * 0.012;
-      renderer.render(scene, camera);
-    };
-    if (reduceMotion) {
-      renderer.render(scene, camera);
-      observer.disconnect();
-      window.removeEventListener('resize', resize);
-      return;
-    }
-    render();
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden && frame) { cancelAnimationFrame(frame); frame = 0; }
-      else if (!document.hidden && visible && !frame) render();
-    });
-  }
 })();
