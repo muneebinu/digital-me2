@@ -26,7 +26,6 @@ See the portfolio for project context, teaching information, skills, and contact
 - CSS3
 - Vanilla JavaScript
 - [GSAP](https://gsap.com/) and ScrollTrigger for motion
-- [Three.js](https://threejs.org/) for the interactive hero visual
 - [Lenis](https://lenis.darkroom.engineering/) for smooth scrolling
 - Google Fonts
 - GitHub Pages for hosting
