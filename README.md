@@ -37,8 +37,8 @@ No build step or package installation is required.
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/muneebinu/digital-me2.git
-   cd digital-me2
+   git clone https://github.com/muneebinu/muneebinu.github.io.git
+   cd muneebinu.github.io
    ```
 2. Open `index.html` in a browser, or serve the folder with a local static server.
 3. The page loads some visual libraries and fonts from third-party CDNs, so an internet connection is needed for those features.
