@@ -1,4 +1,4 @@
-# Muneeb Ur Rehman — Personal Portfolio
+# Muneeb Ur Rehman Personal Portfolio
 
 The source code for my personal portfolio, showcasing selected web development work, practical machine-learning projects, and German language education.
 
