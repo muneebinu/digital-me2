@@ -105,7 +105,7 @@
   mm.add('(min-width: 901px)', () => {
     const track = $('.track');
     const pin = $('.pin');
-    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + parseFloat(getComputedStyle(track).paddingLeft));
+    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
     const horizontal = gsap.to(track, {
       x: () => -distance(), ease: 'none',
       scrollTrigger: {
@@ -246,6 +246,12 @@
       particles.rotation.y = -time * 0.012;
       renderer.render(scene, camera);
     };
+    if (reduceMotion) {
+      renderer.render(scene, camera);
+      observer.disconnect();
+      window.removeEventListener('resize', resize);
+      return;
+    }
     render();
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && frame) { cancelAnimationFrame(frame); frame = 0; }
