@@ -41,18 +41,21 @@
 </header>
 <main id="main">
 <section class="hero" id="top">
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="hero-orbit orbit-one" aria-hidden="true"></div><div class="hero-orbit orbit-two" aria-hidden="true"></div>
   <canvas id="scene" aria-hidden="true"></canvas>
   <div class="hero-in">
-    <p class="kicker" data-hero>BS Computer Science · Swat, Pakistan</p>
-    <h1 class="roles-h">
-      <span class="ln"><span data-role="dev" tabindex="0">Developer.</span></span>
-      <span class="ln"><span data-role="ml" tabindex="0">ML builder.</span></span>
-      <span class="ln"><span data-role="teach" tabindex="0">German teacher.</span></span>
+    <p class="eyebrow" data-hero><span class="eyebrow-line"></span>Independent builder <span class="eyebrow-sep">/</span> Swat, Pakistan</p>
+    <h1 class="hero-title">
+      <span class="ln"><span data-role="dev" tabindex="0">I make</span></span>
+      <span class="ln"><span class="serif-word" data-role="ml" tabindex="0">digital things</span></span>
+      <span class="ln"><span data-role="teach" tabindex="0">matter<span class="hero-period">.</span></span></span>
     </h1>
-    <p class="lead" data-hero>I'm <strong>Muneeb Ur Rehman</strong>. I build websites and machine learning projects, teach German, and founded Fluentio Academia.</p>
-    <div class="actions" data-hero><a class="btn magnetic" href="#work">Explore the work</a><a class="btn btn-ghost magnetic" href="#contact">Get in touch</a></div>
+    <p class="lead" data-hero>I'm <strong>Muneeb Ur Rehman</strong> — a computer science graduate who builds for the web, experiments with machine learning, and teaches German. I like turning curious ideas into useful things.</p>
+    <div class="actions" data-hero><a class="btn magnetic" href="#work"><span>Explore selected work</span><i aria-hidden="true">↘</i></a><a class="text-link magnetic" href="#contact">Start a conversation <span aria-hidden="true">↗</span></a></div>
   </div>
-  <p class="scroll" aria-hidden="true">Scroll</p>
+  <div class="hero-aside" data-hero><span class="aside-index">01 — 04</span><span class="aside-rule"></span><span>Web / ML / Education</span></div>
+  <a class="scroll-cue" href="#work" aria-label="Scroll to selected work"><span>Scroll to explore</span><i aria-hidden="true">↓</i></a>
 </section>
 
 <section id="work" class="work">
@@ -73,7 +76,7 @@
 </section>
 
 <section id="skills" class="skills-sec">
-  <h2 data-r>What I work with</h2>
+  <p class="section-kicker" data-r>03 / The toolkit</p><h2 data-r>Curiosity, with a <em>toolbox.</em></h2>
   <div class="skill-cols">
     <div data-r><h3>Web</h3><p>HTML, CSS, JavaScript, Flask, responsive design, GitHub Pages deployment</p></div>
     <div data-r><h3>AI and machine learning</h3><p>Python, XGBoost, PyTorch, TensorFlow, OpenCV, scikit-learn, NumPy, Pandas</p></div>
@@ -82,7 +85,7 @@
 </section>
 
 <section id="contact" class="contact">
-  <h2 data-r>Have a project, a class to book, or a role to discuss?</h2>
+  <p class="section-kicker" data-r>04 / Say hello</p><h2 data-r>Have something<br><em>good in mind?</em></h2><p class="contact-note" data-r>For thoughtful projects, teaching enquiries or opportunities to work together — my inbox is open.</p>
   <button class="mail" id="copyMail" type="button" data-mail="malakmuneeb9@gmail.com" data-r>malakmuneeb9@gmail.com<span id="copied" role="status"></span></button>
   <ul class="contact-list" data-r>
     <li><a href="https://wa.me/923189150911?text=Hello%20Muneeb%2C%20I%20found%20your%20portfolio." target="_blank" rel="noopener">WhatsApp</a></li>
