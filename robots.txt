@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://muneebinu.github.io/sitemap.xml
